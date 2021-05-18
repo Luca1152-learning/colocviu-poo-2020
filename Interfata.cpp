@@ -43,7 +43,7 @@ bool Interfata::primesteComanda() {
         getline(cin, numeClient);
         adaugaAchizitie(new Achizitie(zi, luna, an, numeClient));
     } else if (comanda == 4) {
-        cout << "\n" << *m_producator.getCelMaiEficientDezinfectant() << "\n\n";
+        cout << "\n" << *m_producator.getCelMaiEficientDezinfectant() << "\n";
     } else if (comanda == 5) {
         cout << "\n";
         int luna, an;
@@ -51,23 +51,23 @@ bool Interfata::primesteComanda() {
         cin >> luna;
         cout << "An: ";
         cin >> an;
-        cout << "\n" << m_producator.getVenitLuna(luna, an) << " lei\n\n";
+        cout << "\n" << m_producator.getVenitLuna(luna, an) << " lei\n";
     } else if (comanda == 6) {
-        cout << "\n" << m_producator.getVenitMastiChirurgicaleCuModel() << " lei\n\n";
+        cout << "\n" << m_producator.getVenitMastiChirurgicaleCuModel() << " lei\n";
     } else if (comanda == 7) {
         m_producator.modificaRetetaDezinfectant();
     } else if (comanda == 8) {
-        cout << "\nCel mai fidel client este: " << m_producator.getCelMaiFidelClient() << "\n\n";
+        cout << "\nCel mai fidel client este: " << m_producator.getCelMaiFidelClient() << "\n";
     } else if (comanda == 9) {
         cout << "\n";
         m_producator.afiseazaCeaMaiSlabaZi();
-        cout << "\n\n";
+        cout << "\n";
     } else if (comanda == 10) {
         cout << "\n";
         int an;
         cout << "An: ";
         cin >> an;
-        cout << "\n" << m_producator.getTVA(an) << " lei\n\n";
+        cout << "\n" << m_producator.getTVA(an) << " lei\n";
     } else {
         return false;
     }

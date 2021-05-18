@@ -29,6 +29,7 @@ istream &operator>>(istream &in, MascaChirurgicala &masca) {
     masca.m_tipProtectie = tipProtectie;
     masca.m_nrPliuri = nrPliuri;
     masca.m_culoare = culoare;
+    masca.m_model = model;
 
     return in;
 }

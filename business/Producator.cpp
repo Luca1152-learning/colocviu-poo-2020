@@ -151,7 +151,7 @@ void Producator::afiseazaCeaMaiSlabaZi() {
                 to_string(it->getAnAchizitie())] += venit;
     }
 
-    double minVenit = 0;
+    double minVenit = INT_MAX;
     string dataMinVenit;
 
     for (auto &it: venitZi) {
