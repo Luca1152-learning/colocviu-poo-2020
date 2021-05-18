@@ -2,6 +2,7 @@
 #define COLOCVIU_POO_2020_INTERFATA_H
 
 #include <iostream>
+#include "business/Producator.h"
 
 using namespace std;
 
@@ -12,6 +13,8 @@ public:
     }
 
 private:
+    Producator producator;
+
     bool primesteComanda() {
         int comanda;
         while (true) {
@@ -35,11 +38,42 @@ private:
             }
         }
 
-        if (comanda == 10) {
+        if (comanda == 1) {
+            // TODO
+            producator.adaugaDezinfectant(nullptr);
+        } else if (comanda == 2) {
+            // TODO
+            producator.adaugaMasca(nullptr);
+        } else if (comanda == 3) {
+            // TODO
+            producator.adaugaAchizitie(nullptr);
+        } else if (comanda == 4) {
+            cout << "\n" << *producator.getCelMaiEficientDezinfectant() << "\n\n";
+        } else if (comanda == 5) {
+            cout << "\n";
+            int luna, an;
+            cout << "Luna: ";
+            cin >> luna;
+            cout << "An: ";
+            cin >> an;
+            cout << "\n" << producator.getVenitLuna(luna, an) << " lei\n\n";
+        } else if (comanda == 6) {
+            cout << "\n" << producator.getVenitMastiChirurgicaleCuModel() << " lei\n\n";
+        } else if (comanda == 7) {
+            producator.modificaRetetaDezinfectant();
+        } else if (comanda == 8) {
+            cout << "\nCel mai fidel client este " << producator.getCelMaiFidelClient() << "\n\n";
+        } else if (comanda == 9) {
+            cout << "\n";
+            int an;
+            cout << "An: ";
+            cin >> an;
+            cout << "\n" << producator.getTVA(an) << "\n\n";
+        } else {
             return false;
         }
 
-        return false;
+        return true;
     }
 };
 

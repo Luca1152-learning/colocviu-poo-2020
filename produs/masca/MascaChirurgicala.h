@@ -5,13 +5,23 @@
 #include <string>
 #include <ostream>
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
 class MascaChirurgicala : public Masca {
 public:
-    MascaChirurgicala(string tipProtectie = "ffp1", string culoare = "neagra", int nrPliuri = 25, string model = "") :
-            Masca(move(tipProtectie), move(culoare)), m_nrPliuri(nrPliuri), m_model(model) {}
+    explicit MascaChirurgicala(string tipProtectie = "ffp1", string culoare = "neagra", int nrPliuri = 25,
+                               string model = "") :
+            Masca(move(tipProtectie), move(culoare)), m_nrPliuri(nrPliuri), m_model(move(model)) {}
+
+    string getModel() const {
+        return m_model;
+    }
+
+    bool areModel() const {
+        return !m_model.empty();
+    }
 
     friend istream &operator>>(istream &in, MascaChirurgicala &masca) {
         string tipProtectie, culoare, model;
@@ -38,7 +48,7 @@ public:
     friend ostream &operator<<(ostream &out, const MascaChirurgicala &masca) {
         out << "Masca chirurgicala (protectie " << masca.m_tipProtectie << ", " << masca.m_culoare << ", "
             << masca.m_nrPliuri << " pliuri";
-        if (masca.m_model != "") {
+        if (!masca.m_model.empty()) {
             out << ", model cu" << masca.m_model;
         }
         out << ")";
@@ -48,7 +58,7 @@ public:
 
     double getPret() const override {
         double pret = Masca::getPret();
-        if (m_model == "") {
+        if (m_model.empty()) {
             return pret;
         } else {
             return 2 * pret;

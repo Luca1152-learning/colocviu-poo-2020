@@ -11,8 +11,8 @@ using namespace std;
 
 class MascaPolicarbonat : public Masca {
 public:
-    MascaPolicarbonat(string tipPrindere = "elastic", string culoare = "neagra") :
-            Masca("ffp0", culoare), m_tipPrindere(move(tipPrindere)) {
+    explicit MascaPolicarbonat(string tipPrindere = "elastic", string culoare = "neagra") :
+            Masca("ffp0", move(culoare)), m_tipPrindere(move(tipPrindere)) {
     }
 
     friend istream &operator>>(istream &in, MascaPolicarbonat &masca) {

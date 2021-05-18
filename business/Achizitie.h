@@ -15,26 +15,74 @@ using namespace std;
 
 class Achizitie {
 public:
-    Achizitie(int zi = 1, int luna = 1, int an = 1970, string numeClient = "Default") :
+    explicit Achizitie(int zi = 1, int luna = 1, int an = 1970, string numeClient = "Default") :
             m_zi(zi), m_luna(luna), m_an(an), m_numeClient(move(numeClient)) {
+    }
+
+    vector<Dezinfectant *> getDezinfectantiAchizitionati() {
+        return m_dezinfectantiAchizitionati;
+    }
+
+    vector<Masca *> getMastiAchizitionate() {
+        return m_mastiAchizitionate;
     }
 
     Achizitie(const Achizitie &achizitie) {
         *this = achizitie;
     }
 
-    string getNumeClient() {
+    string getNumeClient() const {
         return m_numeClient;
     }
 
+    int getZiAchizitie() const {
+        return m_zi;
+    }
+
+    int getLunaAchizitie() const {
+        return m_luna;
+    }
+
+    int getAnAchizitie() const {
+        return m_an;
+    }
+
     Achizitie &operator+=(Dezinfectant *dezinfectant) {
-        m_dezinfectantiAchizitionati.push_back(dezinfectant);
-        return *this;
+        auto dezinfectantBacterii = dynamic_cast<DezinfectantBacterii *>(dezinfectant);
+        if (dezinfectantBacterii) {
+            m_dezinfectantiAchizitionati.push_back(new DezinfectantBacterii(*dezinfectantBacterii));
+            return *this;
+        }
+
+        auto dezinfectantFungi = dynamic_cast<DezinfectantFungi *>(dezinfectant);
+        if (dezinfectantFungi) {
+            m_dezinfectantiAchizitionati.push_back(new DezinfectantFungi(*dezinfectantFungi));
+            return *this;
+        }
+
+        auto dezinfectantVirusuri = dynamic_cast<DezinfectantVirusuri *>(dezinfectant);
+        if (dezinfectantVirusuri) {
+            m_dezinfectantiAchizitionati.push_back(new DezinfectantVirusuri(*dezinfectantVirusuri));
+            return *this;
+        }
+
+        throw runtime_error("Tip de dezinfectant nedetectat.");
     }
 
     Achizitie &operator+=(Masca *masca) {
-        m_mastiAchizitionate.push_back(masca);
-        return *this;
+        auto mascaChirurgicala = dynamic_cast<MascaChirurgicala *>(masca);
+        if (mascaChirurgicala) {
+            m_mastiAchizitionate.push_back(new MascaChirurgicala(*mascaChirurgicala));
+            return *this;
+        }
+
+        auto mascaPolicarbonat = dynamic_cast<MascaPolicarbonat *>(masca);
+        if (mascaPolicarbonat) {
+            m_mastiAchizitionate.push_back(new MascaPolicarbonat(*mascaPolicarbonat));
+            return *this;
+        }
+
+        throw runtime_error("Tip de masca nedetectat.");
     }
 
     Achizitie &operator=(const Achizitie &other) {

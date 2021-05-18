@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <ostream>
 #include "../Produs.h"
 
 using namespace std;
@@ -26,6 +27,21 @@ public:
         } else {
             throw runtime_error("Pentru eficienta " + to_string(eficienta) + " nu a fost stabilit un pret.");
         }
+    }
+
+    friend ostream &operator<<(ostream &out, const Dezinfectant &dezinfectant) {
+        out << "Dezinfectant."
+            << "Specii ucise: " << dezinfectant.m_nrSpeciiUcise
+            << " | Eficienta: " << dezinfectant.getEficienta() << "%"
+            << " | Ingrediente: ";
+        for (auto &it: dezinfectant.m_ingrediente) {
+            out << it << " ";
+        }
+        out << "| Suprafete: ";
+        for (auto &it: dezinfectant.m_suprafete) {
+            out << it << " ";
+        }
+        return out;
     }
 
     virtual ~Dezinfectant() = default;
