@@ -3,24 +3,18 @@
 
 #include <string>
 #include <utility>
+#include <ostream>
 #include "../Produs.h"
 
 using namespace std;
 
 class Masca : public Produs {
 public:
-    double getPret() const override {
-        if (m_tipProtectie == "ffp1") {
-            return 5;
-        } else if (m_tipProtectie == "ffp2") {
-            return 10;
-        } else if (m_tipProtectie == "ffp3") {
-            return 15;
-        }
-        return 0;
-    }
+    double getPret() const override;
 
     virtual ~Masca() = default;
+
+    friend ostream &operator<<(ostream &out, const Masca &masca);
 
 protected:
     string m_tipProtectie, m_culoare;

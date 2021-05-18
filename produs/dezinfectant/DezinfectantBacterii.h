@@ -8,12 +8,10 @@ using namespace std;
 
 class DezinfectantBacterii : public Dezinfectant {
 public:
-    DezinfectantBacterii(double nrSpeciiUcise, const vector<string> &ingrediente, const vector<string> &suprafete)
-            : Dezinfectant(nrSpeciiUcise, ingrediente, suprafete) {}
+    explicit DezinfectantBacterii(double nrSpeciiUcise = 0, const vector<string> &ingrediente = {},
+                                  const vector<string> &suprafete = {});
 
-    double getEficienta() const override {
-        return m_nrSpeciiUcise / NR_TOTAL_BACTERII;
-    }
+    double getEficienta() const override;
 
 private:
     static constexpr double NR_TOTAL_BACTERII = 1000000000;

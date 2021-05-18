@@ -15,178 +15,43 @@ using namespace std;
 
 class Achizitie {
 public:
-    explicit Achizitie(int zi = 1, int luna = 1, int an = 1970, string numeClient = "Default") :
-            m_zi(zi), m_luna(luna), m_an(an), m_numeClient(move(numeClient)) {
-    }
+    explicit Achizitie(int zi = 1, int luna = 1, int an = 1970, string numeClient = "Default");
 
-    vector<Dezinfectant *> getDezinfectantiAchizitionati() {
-        return m_dezinfectantiAchizitionati;
-    }
+    vector<Dezinfectant *> &getDezinfectantiAchizitionati();
 
-    vector<Masca *> getMastiAchizitionate() {
-        return m_mastiAchizitionate;
-    }
+    vector<Masca *> &getMastiAchizitionate();
 
-    Achizitie(const Achizitie &achizitie) {
-        *this = achizitie;
-    }
+    Achizitie(const Achizitie &achizitie);
 
-    string getNumeClient() const {
-        return m_numeClient;
-    }
+    string getNumeClient() const;
 
-    int getZiAchizitie() const {
-        return m_zi;
-    }
+    int getZiAchizitie() const;
 
-    int getLunaAchizitie() const {
-        return m_luna;
-    }
+    int getLunaAchizitie() const;
 
-    int getAnAchizitie() const {
-        return m_an;
-    }
+    int getAnAchizitie() const;
 
-    Achizitie &operator+=(Dezinfectant *dezinfectant) {
-        auto dezinfectantBacterii = dynamic_cast<DezinfectantBacterii *>(dezinfectant);
-        if (dezinfectantBacterii) {
-            m_dezinfectantiAchizitionati.push_back(new DezinfectantBacterii(*dezinfectantBacterii));
-            return *this;
-        }
+    Achizitie &operator+=(Dezinfectant *dezinfectant);
 
-        auto dezinfectantFungi = dynamic_cast<DezinfectantFungi *>(dezinfectant);
-        if (dezinfectantFungi) {
-            m_dezinfectantiAchizitionati.push_back(new DezinfectantFungi(*dezinfectantFungi));
-            return *this;
-        }
+    Achizitie &operator+=(Masca *masca);
 
-        auto dezinfectantVirusuri = dynamic_cast<DezinfectantVirusuri *>(dezinfectant);
-        if (dezinfectantVirusuri) {
-            m_dezinfectantiAchizitionati.push_back(new DezinfectantVirusuri(*dezinfectantVirusuri));
-            return *this;
-        }
+    Achizitie &operator=(const Achizitie &other);
 
-        throw runtime_error("Tip de dezinfectant nedetectat.");
-    }
+    ~Achizitie();
 
-    Achizitie &operator+=(Masca *masca) {
-        auto mascaChirurgicala = dynamic_cast<MascaChirurgicala *>(masca);
-        if (mascaChirurgicala) {
-            m_mastiAchizitionate.push_back(new MascaChirurgicala(*mascaChirurgicala));
-            return *this;
-        }
+    double getValoareFactura() const;
 
-        auto mascaPolicarbonat = dynamic_cast<MascaPolicarbonat *>(masca);
-        if (mascaPolicarbonat) {
-            m_mastiAchizitionate.push_back(new MascaPolicarbonat(*mascaPolicarbonat));
-            return *this;
-        }
+    bool operator<(const Achizitie &other) const;
 
-        throw runtime_error("Tip de masca nedetectat.");
-    }
+    bool operator>(const Achizitie &other) const;
 
-    Achizitie &operator=(const Achizitie &other) {
-        if (this != &other) {
-            m_zi = other.m_zi;
-            m_luna = other.m_luna;
-            m_an = other.m_an;
-            m_numeClient = other.m_numeClient;
+    bool operator<=(const Achizitie &other) const;
 
-            for (auto &it: m_dezinfectantiAchizitionati) {
-                delete it;
-            }
-            for (auto &it: m_mastiAchizitionate) {
-                delete it;
-            }
-            m_dezinfectantiAchizitionati.clear();
-            m_mastiAchizitionate.clear();
+    bool operator>=(const Achizitie &other) const;
 
-            for (auto &it: other.m_dezinfectantiAchizitionati) {
-                auto dezinfectantBacterii = dynamic_cast<DezinfectantBacterii *>(it);
-                if (dezinfectantBacterii) {
-                    m_dezinfectantiAchizitionati.push_back(new DezinfectantBacterii(*dezinfectantBacterii));
-                    continue;
-                }
+    bool operator==(const Achizitie &other) const;
 
-                auto dezinfectantFungi = dynamic_cast<DezinfectantFungi *>(it);
-                if (dezinfectantFungi) {
-                    m_dezinfectantiAchizitionati.push_back(new DezinfectantFungi(*dezinfectantFungi));
-                    continue;
-                }
-
-                auto dezinfectantVirusuri = dynamic_cast<DezinfectantVirusuri *>(it);
-                if (dezinfectantVirusuri) {
-                    m_dezinfectantiAchizitionati.push_back(new DezinfectantVirusuri(*dezinfectantVirusuri));
-                    continue;
-                }
-
-                throw runtime_error("Tip de dezinfectant nedetectat.");
-            }
-
-            for (auto &it: other.m_mastiAchizitionate) {
-                auto mascaChirurgicala = dynamic_cast<MascaChirurgicala *>(it);
-                if (mascaChirurgicala) {
-                    m_mastiAchizitionate.push_back(new MascaChirurgicala(*mascaChirurgicala));
-                    continue;
-                }
-
-                auto mascaPolicarbonat = dynamic_cast<MascaPolicarbonat *>(it);
-                if (mascaPolicarbonat) {
-                    m_mastiAchizitionate.push_back(new MascaPolicarbonat(*mascaPolicarbonat));
-                    continue;
-                }
-
-                throw runtime_error("Tip de masca nedetectat.");
-            }
-        }
-        return *this;
-    }
-
-    ~Achizitie() {
-        for (auto &it: m_dezinfectantiAchizitionati) {
-            delete it;
-        }
-        for (auto &it: m_mastiAchizitionate) {
-            delete it;
-        }
-        m_dezinfectantiAchizitionati.clear();
-        m_mastiAchizitionate.clear();
-    }
-
-    double getValoareFactura() const {
-        double valoare = 0;
-        for (auto &it: m_dezinfectantiAchizitionati) {
-            valoare += it->getPret();
-        }
-        for (auto &it: m_mastiAchizitionate) {
-            valoare += it->getPret();
-        }
-        return valoare;
-    }
-
-    bool operator<(const Achizitie &other) const {
-        return getValoareFactura() < other.getValoareFactura();
-    }
-
-    bool operator>(const Achizitie &other) const {
-        return other < *this;
-    }
-
-    bool operator<=(const Achizitie &other) const {
-        return !(other < *this);
-    }
-
-    bool operator>=(const Achizitie &other) const {
-        return !(*this < other);
-    }
-
-    bool operator==(const Achizitie &other) const {
-        return getValoareFactura() == other.getValoareFactura();
-    }
-
-    bool operator!=(const Achizitie &other) const {
-        return !(other == *this);
-    }
+    bool operator!=(const Achizitie &other) const;
 
 private:
     int m_zi, m_luna, m_an;

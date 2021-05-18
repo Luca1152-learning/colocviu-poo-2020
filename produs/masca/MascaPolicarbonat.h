@@ -11,37 +11,13 @@ using namespace std;
 
 class MascaPolicarbonat : public Masca {
 public:
-    explicit MascaPolicarbonat(string tipPrindere = "elastic", string culoare = "neagra") :
-            Masca("ffp0", move(culoare)), m_tipPrindere(move(tipPrindere)) {
-    }
+    explicit MascaPolicarbonat(string tipPrindere = "elastic", string culoare = "neagra");
 
-    friend istream &operator>>(istream &in, MascaPolicarbonat &masca) {
-        string tipProtectie, culoare, tipPrindere;
+    friend istream &operator>>(istream &in, MascaPolicarbonat &masca);
 
-        cout << "Tip protectie masca policarbonat (ffp1, ffp2, ffp3): ";
-        cin.get();
-        getline(in, tipProtectie);
-        cout << "Tip prindere masca policarbonat: ";
-        getline(in, tipPrindere);
-        cout << "Culoare masca policarbonat: ";
-        getline(in, culoare);
+    double getPret() const override;
 
-        masca.m_tipProtectie = tipProtectie;
-        masca.m_tipPrindere = tipPrindere;
-        masca.m_culoare = culoare;
-
-        return in;
-    }
-
-    double getPret() const override {
-        return 20;
-    }
-
-    friend ostream &operator<<(ostream &out, const MascaPolicarbonat &masca) {
-        out << "Masca policarbonat (protectie " << masca.m_tipProtectie << ", prindere "
-            << masca.m_tipPrindere << ", " << masca.m_culoare << ")";
-        return out;
-    }
+    friend ostream &operator<<(ostream &out, const MascaPolicarbonat &masca);
 
 private:
     string m_tipPrindere;
